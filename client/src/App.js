@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
-import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import axios from 'axios';
 
-import CreateCourse from './Components/CreateCourse';
 import Header from './Components/Stateless/Header';
 import Courses from './Components/Courses';
-
+import CreateCourse from './Components/CreateCourse';
+import CourseDetail from './Components/CourseDetail';
+import UpdateCourse from './Components/UpdateCourse';
+import UserSignIn from './Components/UserSignIn';
+import UserSignUp from './Components/UserSignUp';
 
 class App extends Component {
   state = {
@@ -28,13 +31,28 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="App">
-            <Header/>
+          <Header/>
+          <Switch>
             <Route
               exact
-              path="/courses"
-              render={() => <Courses getData={this.getData} data={this.state.data}/>}/>
-            <Route exact path="/courses/create" component={CreateCourse}/>
-            <Route exact path="/" render={() => <Redirect to="/courses"/>}/>
+              path="/"
+              render={({location}) => <Courses getData={this.getData} data={this.state.data} key={location.key}/>}/>
+            <Route path="/courses/create" component={CreateCourse}/>
+            <Route
+              exact
+              path="/courses/:id/update"
+              render={({match}) => <UpdateCourse getData={this.getData} data={this.state.data} match={match}/>}/>
+            <Route
+              exact
+              path="/courses/:id"
+              render={({match, location}) => <CourseDetail
+              getData={this.getData}
+              data={this.state.data}
+              match={match}
+              key={location.key}/>}/>
+              <Route exact path="/signin" component={UserSignIn}/>
+              <Route exact path="/signup" component={UserSignUp}/>
+          </Switch>
         </div>
       </BrowserRouter>
     );

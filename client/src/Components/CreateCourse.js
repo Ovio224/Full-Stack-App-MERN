@@ -63,9 +63,7 @@ export default class CreateCourse extends Component {
             <div className="grid-100 pad-bottom">
               <button className="button" type="submit">Create Course</button>
               {/* , location.href='/' */}
-              <button
-                className="button button-secondary"
-                onClick={(event) => event.preventDefault()}>Cancel</button>
+              <a className="button button-secondary" href="/">Cancel</a>
             </div>
           </form>
         </div>

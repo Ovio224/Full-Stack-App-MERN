@@ -1,18 +1,35 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 
-export default class CourseDetail extends Component {
+class CourseDetail extends Component {
+
+  componentDidMount() {
+    this.props.getData(`courses/${this.props.match.params.id}`);
+    console.log('mounting coursedetail')
+  }
+
   render() {
-    return (
+    const props = this.props.data;
+    let materialsToShow;
+    let materials;
+    if(props.materialsNeeded){
+      materials = props.materialsNeeded.split("*").filter((material) => material ? material : null);
+      materialsToShow = materials.map((material, index) => (
+        <li key={index}>{material}</li>
+      ));
+    }
+    
 
+    return (
       <div>
         <div className="actions--bar">
           <div className="bounds">
             <div className="grid-100">
               <span>
-                <a className="button" href="update-course.html">Update Course</a>
-                <a className="button" href="#">Delete Course</a>
+                <Link className="button" to={`${this.props.match.params.id}/update`}>Update Course</Link>
+                <a className="button" href="assdadasa">Delete Course</a>
               </span>
-              <a className="button button-secondary" href="index.html">Return to List</a>
+              <Link className="button button-secondary" to="/">Return to List</Link>
             </div>
           </div>
         </div>
@@ -20,11 +37,11 @@ export default class CourseDetail extends Component {
           <div className="grid-66">
             <div className="course--header">
               <h4 className="course--label">Course</h4>
-              <h3 className="course--title">Build a Basic Bookcase</h3>
-              <p>By Joe Smith</p>
+              <h3 className="course--title">{props.title}</h3>
+              <p>By {(props.user) ? props.user.firstName + " " + props.user.lastName : " "}</p>
             </div>
             <div className="course--description">
-              <p></p>
+              <p>{props.description}</p>
             </div>
           </div>
           <div className="grid-25 grid-right">
@@ -32,21 +49,12 @@ export default class CourseDetail extends Component {
               <ul className="course--stats--list">
                 <li className="course--stats--list--item">
                   <h4>Estimated Time</h4>
-                  <h3>14 hours</h3>
+                  {(props.estimatedTime) ? <h3>{props.estimatedTime}</h3> : <h2>No estimated time specified</h2>}
                 </li>
                 <li className="course--stats--list--item">
                   <h4>Materials Needed</h4>
                   <ul>
-                    <li>1/2 x 3/4 inch parting strip</li>
-                    <li>1 x 2 common pine</li>
-                    <li>1 x 4 common pine</li>
-                    <li>1 x 10 common pine</li>
-                    <li>1/4 inch thick lauan plywood</li>
-                    <li>Finishing Nails</li>
-                    <li>Sandpaper</li>
-                    <li>Wood Glue</li>
-                    <li>Wood Filler</li>
-                    <li>Minwax Oil Based Polyurethane</li>
+                    {(materials) ? materialsToShow : <li>No materials specified</li>}
                   </ul>
                 </li>
               </ul>
@@ -57,3 +65,5 @@ export default class CourseDetail extends Component {
     );
   }
 };
+
+export default CourseDetail;

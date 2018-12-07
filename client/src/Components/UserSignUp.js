@@ -13,37 +13,27 @@ export default class UserSignUp extends Component {
                 id="firstName"
                 name="firstName"
                 type="text"
-                className
-                placeholder="First Name"
-                defaultValue/></div>
+                placeholder="First Name"/></div>
               <div><input
                 id="lastName"
                 name="lastName"
                 type="text"
-                className
-                placeholder="Last Name"
-                defaultValue/></div>
+                placeholder="Last Name"/></div>
               <div><input
                 id="emailAddress"
                 name="emailAddress"
                 type="text"
-                className
-                placeholder="Email Address"
-                defaultValue/></div>
+                placeholder="Email Address"/></div>
               <div><input
                 id="password"
                 name="password"
                 type="password"
-                className
-                placeholder="Password"
-                defaultValue/></div>
+                placeholder="Password"/></div>
               <div><input
                 id="confirmPassword"
                 name="confirmPassword"
                 type="password"
-                className
-                placeholder="Confirm Password"
-                defaultValue/></div>
+                placeholder="Confirm Password"/></div>
               <div className="grid-100 pad-bottom">
                 <button className="button" type="submit">Sign Up</button>
                 <button
@@ -54,7 +44,7 @@ export default class UserSignUp extends Component {
           </div>
           <p>&nbsp;</p>
           <p>Already have a user account?
-            <a href="sign-in.html">Click here</a>
+            <a href="sign-in.html"> Click here </a>
             to sign in!</p>
         </div>
       </div>
