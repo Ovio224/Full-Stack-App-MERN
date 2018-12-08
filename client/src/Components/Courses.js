@@ -4,9 +4,8 @@ import {Link} from 'react-router-dom';
 // './CreateCourse';
 
 class Courses extends Component {
-
   componentDidMount() {
-    this.props.getData('courses');
+    this.props.getData('courses', 'get');
     console.log('mounting');
   }
 

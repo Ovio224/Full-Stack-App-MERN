@@ -1,11 +1,22 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
+import Axios from 'axios';
 
 class CourseDetail extends Component {
 
   componentDidMount() {
-    this.props.getData(`courses/${this.props.match.params.id}`);
+    this.props.getData(`courses/${this.props.match.params.id}`, 'get');
     console.log('mounting coursedetail')
+  }
+
+  handleClick = () => {
+    // this.props.getData(`courses/${this.props.match.params.id}`, 'delete', 'application/json');
+    Axios.delete(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => console.error(err));
+      //try with fetch
   }
 
   render() {
@@ -27,7 +38,7 @@ class CourseDetail extends Component {
             <div className="grid-100">
               <span>
                 <Link className="button" to={`${this.props.match.params.id}/update`}>Update Course</Link>
-                <a className="button" href="assdadasa">Delete Course</a>
+                <button className="button" onClick={this.handleClick}>Delete Course</button>
               </span>
               <Link className="button button-secondary" to="/">Return to List</Link>
             </div>

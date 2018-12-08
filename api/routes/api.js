@@ -120,10 +120,6 @@ router.put('/courses/:id', getAuth, (req, res) => {
     return res.status(204);
   }).catch(err => res.send(err));
 });
-//   Course.findOneAndUpdate(query, req.body, (err, course) => {
-
-
-// });
 
 // deletes a course
 router.delete('/courses/:id', getAuth, (req, res) => {
