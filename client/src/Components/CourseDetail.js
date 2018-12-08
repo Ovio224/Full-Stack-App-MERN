@@ -11,12 +11,16 @@ class CourseDetail extends Component {
 
   handleClick = () => {
     // this.props.getData(`courses/${this.props.match.params.id}`, 'delete', 'application/json');
-    Axios.delete(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => console.error(err));
+    // Axios.delete(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(err => console.error(err));
       //try with fetch
+    return fetch(`http://localhost:5000/api/courses/${this.props.match.params.id}`, {
+      method: 'delete'
+    })
+    .then(response => response.json());
   }
 
   render() {
