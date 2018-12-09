@@ -16,29 +16,30 @@ class App extends Component {
     loading: true
   }
 
-  getData = (route, request) => {
-    this.setState({loading: true});
-    axios.request(`http://localhost:5000/api/${route}`)
-      .then(res => {
-        this.setState({data: res.data, loading: false});
-      })
-      .catch(err => console.error(err));
-  }
-
-  // getData = (route, method, data) => {
-  //   axios({
-  //       method: method,
-  //       url: `http://localhost:5000/api/${route}`,
-  //       data: data
-  //     })
+  // getData = (route, request) => {
+  //   this.setState({loading: true});
+  //   axios.request(`http://localhost:5000/api/${route}`)
   //     .then(res => {
-  //       this.setState({
-  //         data: res.data,
-  //         loading: false
-  //       });
+  //       this.setState({data: res.data, loading: false});
   //     })
   //     .catch(err => console.error(err));
   // }
+
+  getData = (route, method, data) => {
+    axios({
+        method: method,
+        url: `http://localhost:5000/api/${route}`,
+        data: data
+      })
+      .then(res => {
+        console.log(res)
+        this.setState({
+          data: res.data,
+          loading: false
+        });
+      })
+      .catch(err => console.error(err));
+  }
 
   render() {
 
