@@ -32,7 +32,6 @@ class App extends Component {
         data: data
       })
       .then(res => {
-        console.log(res)
         this.setState({
           data: res.data,
           loading: false
