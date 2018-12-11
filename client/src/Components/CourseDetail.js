@@ -11,7 +11,7 @@ class CourseDetail extends Component {
 
   handleClick = () => {
     // this.props.getData(`courses/${this.props.match.params.id}`, 'delete');
-    Axios.delete(`http://localhost:5000/api/courses/${this.props.match.params.id}`)
+    Axios.delete(`http://localhost:5000/api/courses/${this.props.match.params.id}`) // TODO: Auth Headers
       .then(res => {
         console.log(res);
       })
