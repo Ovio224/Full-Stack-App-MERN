@@ -15,13 +15,6 @@ const app = express();
 // setup dependencies
 app.use(morgan('dev'));
 app.use(jsonParser());
-// app.use(cors({credentials: true, origin: true}));
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT, DELETE");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-//   next();
-// });
 
 
 app.use(function(req, res, next) {
