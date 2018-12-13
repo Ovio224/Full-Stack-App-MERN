@@ -25,6 +25,9 @@ app.use(function(req, res, next) {
 });
 
 
+// fix deprecation error
+mongoose.set("useCreateIndex", true);
+mongoose.set("useFindAndModify", false);
 // link to database
 const mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/fsjstd-restapi", {
