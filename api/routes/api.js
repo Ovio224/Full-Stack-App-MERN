@@ -23,7 +23,7 @@ function getAuth(req, res, next) {
         }).then(() => {
           if (isAuth) {
             req.user = users[0];
-            next();
+            // next();
           } else {
             res.status(401).end();
           }
@@ -125,18 +125,18 @@ router.put('/courses/:id', getAuth, (req, res) => {
 });
 
 // deletes a course
-router.delete('/courses/:id', getAuth, cors(), (req, res) => {
+router.delete('/courses/:id', (req, res) => {
   const query = {
     _id: req.params.id
   };
-  Course.findById(query, (err, course) => {
-    if (course.user.toString() !== req.user._id.toString()) { // sends a 403 status code if the user doesn't own the course
-      return res.status(403).end();
-    } else {
-      return course.remove((err, course) => {
-        res.status(204).end();
-      });
-    }
+  Course.findOne(query, (err, course) => {
+      if (course.user.toString() !== req.user._id.toString()) { // sends a 403 status code if the user doesn't own the course
+        return res.status(403).end();
+      } else {
+        return course.remove((err, course) => {
+          res.status(204).end();
+        });
+      }
   }).catch(err => console.log(err))
 });
 

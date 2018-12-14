@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
-import Axios from 'axios';
 
 class CourseDetail extends Component {
 
@@ -10,17 +9,7 @@ class CourseDetail extends Component {
   }
 
   handleClick = () => {
-    // this.props.getData(`courses/${this.props.match.params.id}`, 'delete');
-    Axios.delete(`http://localhost:5000/api/courses/${this.props.match.params.id}`) // TODO: Auth Headers
-      .then(res => {
-        console.log(res);
-      })
-      .catch(err => console.error(err));
-      //try with fetch
-    //   fetch(`http://localhost:5000/api/courses/${this.props.match.params.id}`, {
-    //   method: 'delete'
-    // })
-    // .then(response => console.log(response));
+    this.props.getData(`courses/${this.props.match.params.id}`, 'delete');
   }
 
   render() {

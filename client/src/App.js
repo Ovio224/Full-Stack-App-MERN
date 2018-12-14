@@ -16,20 +16,10 @@ class App extends Component {
     loading: true
   }
 
-  // getData = (route, request) => {
-  //   this.setState({loading: true});
-  //   axios.request(`http://localhost:5000/api/${route}`)
-  //     .then(res => {
-  //       this.setState({data: res.data, loading: false});
-  //     })
-  //     .catch(err => console.error(err));
-  // }
-
-  getData = (route, method, data) => {
+  getData = (route, method) => {
     axios({
-        method: method,
-        url: `http://localhost:5000/api/${route}`,
-        data: data
+        method,
+        url: `http://localhost:5000/api/${route}`
       })
       .then(res => {
         this.setState({
@@ -65,7 +55,7 @@ class App extends Component {
               match={match}
               key={location.key}/>}/>
               <Route exact path="/signin" component={UserSignIn}/>
-              <Route exact path="/signup" component={UserSignUp}/>
+              <Route exact path="/signup" render={() =><UserSignUp getData={this.getData}/>}/>
           </Switch>
         </div>
       </BrowserRouter>
