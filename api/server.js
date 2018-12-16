@@ -25,9 +25,7 @@ app.use(function(req, res, next) {
 });
 
 
-// fix deprecation error
-
-// link to database
+// link to database // fix deprecation error
 const mongoose = require('mongoose');
 mongoose.set("useCreateIndex", true);
 mongoose.set("useFindAndModify", false);
