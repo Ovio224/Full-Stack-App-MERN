@@ -19,7 +19,7 @@ export default class UserSignUp extends Component {
             <div className="grid-33 centered signin">
               <h1>Sign Up</h1>
               <div>
-                <form onSubmit={actions.handleSignUp}>
+                <form onSubmit={(event) => actions.handleSignUp(event)}>
                   <div><input
                     id="firstName"
                     name="firstName"

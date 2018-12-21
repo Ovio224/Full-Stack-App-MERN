@@ -6,8 +6,6 @@ const User = require('../models').User;
 const Course = require('../models').Course;
 const auth = require('basic-auth');
 const bcrypt = require('bcrypt');
-const cors = require('cors');
-
 
 
 // auth function
@@ -20,10 +18,10 @@ function getAuth(req, res, next) {
       bcrypt.compare(auth(req).pass, users[0].password)
         .then((res) => {
           isAuth = res;
-        }).then(() => {
+        }).then((res) => {
           if (isAuth) {
             req.user = users[0];
-            // next();
+            next();
           } else {
             res.status(401).end();
           }

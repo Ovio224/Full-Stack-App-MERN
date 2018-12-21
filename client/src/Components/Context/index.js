@@ -51,7 +51,7 @@ export class Provider extends Component {
     })
   }
 
-  handleSignUp = () => {
+  handleSignUp = (e) => {
     const {
       firstName,
       lastName,
@@ -67,9 +67,7 @@ export class Provider extends Component {
         password,
         confirmPassword
       })
-      .then(res => {
-        res.json();
-      }).then(json => {
+      .then(json => {
         console.log('json', json);
         if (json.success) {
           this.setState({
@@ -86,7 +84,7 @@ export class Provider extends Component {
         }
       })
       .catch(err => console.error(err));
-    this.handleSignIn();
+    this.handleSignIn(e);
   }
 
   handleSignIn = (e) => {
@@ -99,21 +97,17 @@ export class Provider extends Component {
     axios.get('http://localhost:5000/api/users', {
         auth: {
           username: emailAddress,
-          password
+          password: password
         }
       })
-      .then(res => {
-        res.json();
-      }).then(json => {
+      .then(json => {
         console.log('json', json);
         if (json.success) {
-          // setInStorage('the_main_app', { token: json.token });
           this.setState({
             signInError: json.message,
             isLoading: false,
             password: '',
             emailAddress: ''
-            // token: json.token,
           });
         } else {
           this.setState({
