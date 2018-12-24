@@ -18,7 +18,8 @@ export class Provider extends Component {
     password: '',
     confirmPassword: '',
     signUpError: '',
-    signInError: ''
+    signInError: '',
+    signedIn: false
   }
 
   changeFirstName = (e) => {
@@ -100,23 +101,34 @@ export class Provider extends Component {
           password: password
         }
       })
-      .then(json => {
-        console.log('json', json);
-        if (json.success) {
+      .then(res => {
+        console.log('status', res.status);
+        if (res.status === 200) {
           this.setState({
-            signInError: json.message,
+            signInError: res.message,
             isLoading: false,
             password: '',
-            emailAddress: ''
+            emailAddress: '',
+            signedIn: true
           });
+          console.log(this.state.signedIn)
         } else {
           this.setState({
-            signInError: json.message,
+            signInError: res.message,
             isLoading: false,
+            // signedIn: false
           });
+          console.log(this.state.signedIn)
         }
       })
       .catch(err => console.error(err));
+
+      console.log(this.state.signedIn)
+
+      if(this.state.signedIn) {
+        this.context.history.push('/');
+        console.log('signed in')
+      }
   }
   render() {
     return (
