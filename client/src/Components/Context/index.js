@@ -116,7 +116,7 @@ export class Provider extends Component {
           this.setState({
             signInError: res.message,
             isLoading: false,
-            // signedIn: false
+            signedIn: false
           });
           console.log(this.state.signedIn)
         }
