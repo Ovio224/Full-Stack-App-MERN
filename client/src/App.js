@@ -31,11 +31,11 @@ class App extends Component {
   }
 
   render() {
-
+  
     return (
       <BrowserRouter>
         <div className="App">
-          <Header/>
+          <Header />
           <Switch>
             <Route
               exact

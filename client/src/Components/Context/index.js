@@ -67,7 +67,7 @@ export class Provider extends Component {
         confirmPassword
       })
       .then(json => {
-        console.log('json', json);
+        // console.log('json', json);
         if (json.success) {
           this.setState({
             loading: false,
@@ -81,7 +81,10 @@ export class Provider extends Component {
         }
       })
       .catch(err => console.error(err));
-    this.handleSignIn(e);
+    setTimeout(function () {
+      this.handleSignIn(e);
+    }.bind(this), 200);
+
   }
 
   handleSignIn = (e, history) => {
@@ -98,39 +101,51 @@ export class Provider extends Component {
         }
       })
       .then(res => {
-            let fname;
-            let lname;
-            res.data.filter((data) => {
-              if(data.emailAddress === emailAddress){
-                fname = data.firstName;
-                lname = data.lname;
-              }
-            });
-            if (res.status === 200) {
-              this.setState({
-                firstName: fname,
-                lastName: lname,
-                isLoading: false,
-                password: '',
-                emailAddress: '',
-                signedIn: true
-              });
-            } else {
-              this.setState({
-                isLoading: false,
-                signedIn: false
-              });
+        let fname;
+        let lname;
+        res.data.filter((data) => {
+          if (data.emailAddress === emailAddress) {
+            fname = data.firstName;
+            lname = data.lastName;
+          }
+        });
+        if (res.status === 200) {
+          this.setState({
+            firstName: fname,
+            lastName: lname,
+            isLoading: false,
+            password: '',
+            emailAddress: '',
+            signedIn: true
+          });
+        } else {
+          this.setState({
+            isLoading: false,
+            signedIn: false
+          });
         }
       })
       .catch(err => console.error(err));
 
     setTimeout(function () {
       if (this.state.signedIn) {
-        history.goBack();
-        console.log('signed in')
+        // history.goBack();
+        history.push('/');
       }
     }.bind(this), 100);
   }
+
+  handleSignOut = () => {
+    this.setState({
+      firstName: '',
+      lastName: '',
+      isLoading: false,
+      password: '',
+      emailAddress: '',
+      signedIn: false
+    });
+  }
+
   render() {
     return (
       <Context.Provider value={{
@@ -139,6 +154,7 @@ export class Provider extends Component {
         emailAddress: this.state.emailAddress,
         password: this.state.password,
         confirmPassword: this.state.confirmPassword,
+        signedIn: this.state.signedIn,
         actions: {
           changeFirstName: this.changeFirstName,
           changeLastName: this.changeLastName,
@@ -146,7 +162,8 @@ export class Provider extends Component {
           changePassword: this.changePassword,
           changeConfirmPassword: this.changeConfirmPassword,
           handleSignUp: this.handleSignUp,
-          handleSignIn: this.handleSignIn
+          handleSignIn: this.handleSignIn,
+          handleSignOut: this.handleSignOut
         }
       }}>
       { this.props.children }
