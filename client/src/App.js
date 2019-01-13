@@ -54,7 +54,7 @@ class App extends Component {
               data={this.state.data}
               match={match}
               key={location.key}/>}/>
-              <Route exact path="/signin" component={UserSignIn}/>
+              <Route exact path="/signin" render={({history}) => <UserSignIn history={history}/>}/>
               <Route exact path="/signup" render={() =><UserSignUp getData={this.getData}/>}/>
           </Switch>
         </div>

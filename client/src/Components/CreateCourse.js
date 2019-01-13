@@ -27,7 +27,7 @@ export default class CreateCourse extends Component {
                   className="input-title course--title--input"
                   placeholder="Course title..."/>
                 </div>
-                <p>By Joe Smith</p>
+                {/* <p>By Joe Smith</p> */}
               </div>
               <div className="course--description">
                 <div><textarea

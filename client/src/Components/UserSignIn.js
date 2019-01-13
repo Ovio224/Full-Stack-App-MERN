@@ -11,7 +11,7 @@ export default class UserSignIn extends Component {
           <div className="grid-33 centered signin">
             <h1>Sign In</h1>
             <div>
-              <form onSubmit={actions.handleSignIn}>
+              <form onSubmit={(event) => actions.handleSignIn(event, this.props.history)}>
                 <div><input
                   id="emailAddress"
                   name="emailAddress"

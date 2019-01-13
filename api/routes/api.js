@@ -18,7 +18,7 @@ function getAuth(req, res, next) {
       bcrypt.compare(auth(req).pass, users[0].password)
         .then((res) => {
           isAuth = res;
-        }).then((res) => {
+        }).then((response) => {
           if (isAuth) {
             req.user = users[0];
             next();

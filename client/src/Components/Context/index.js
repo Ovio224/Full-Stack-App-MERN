@@ -17,8 +17,6 @@ export class Provider extends Component {
     emailAddress: '',
     password: '',
     confirmPassword: '',
-    signUpError: '',
-    signInError: '',
     signedIn: false
   }
 
@@ -72,14 +70,12 @@ export class Provider extends Component {
         console.log('json', json);
         if (json.success) {
           this.setState({
-            signUpError: json.message,
             loading: false,
             emailAddress: '',
             password: '',
           });
         } else {
           this.setState({
-            signUpError: json.message,
             isLoading: false,
           });
         }
@@ -88,7 +84,7 @@ export class Provider extends Component {
     this.handleSignIn(e);
   }
 
-  handleSignIn = (e) => {
+  handleSignIn = (e, history) => {
     e.preventDefault();
     const {
       emailAddress,
@@ -98,37 +94,42 @@ export class Provider extends Component {
     axios.get('http://localhost:5000/api/users', {
         auth: {
           username: emailAddress,
-          password: password
+          password
         }
       })
       .then(res => {
-        console.log('status', res.status);
-        if (res.status === 200) {
-          this.setState({
-            signInError: res.message,
-            isLoading: false,
-            password: '',
-            emailAddress: '',
-            signedIn: true
-          });
-          console.log(this.state.signedIn)
-        } else {
-          this.setState({
-            signInError: res.message,
-            isLoading: false,
-            signedIn: false
-          });
-          console.log(this.state.signedIn)
+            let fname;
+            let lname;
+            res.data.filter((data) => {
+              if(data.emailAddress === emailAddress){
+                fname = data.firstName;
+                lname = data.lname;
+              }
+            });
+            if (res.status === 200) {
+              this.setState({
+                firstName: fname,
+                lastName: lname,
+                isLoading: false,
+                password: '',
+                emailAddress: '',
+                signedIn: true
+              });
+            } else {
+              this.setState({
+                isLoading: false,
+                signedIn: false
+              });
         }
       })
       .catch(err => console.error(err));
 
-      console.log(this.state.signedIn)
-
-      if(this.state.signedIn) {
-        this.context.history.push('/');
+    setTimeout(function () {
+      if (this.state.signedIn) {
+        history.goBack();
         console.log('signed in')
       }
+    }.bind(this), 100);
   }
   render() {
     return (
