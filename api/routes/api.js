@@ -123,11 +123,12 @@ router.put('/courses/:id', getAuth, (req, res) => {
 });
 
 // deletes a course
-router.delete('/courses/:id', (req, res) => {
+router.delete('/courses/:id', getAuth, (req, res) => {
   const query = {
     _id: req.params.id
   };
   Course.findOne(query, (err, course) => {
+    console.log("req:", req.user)
       if (course.user.toString() !== req.user._id.toString()) { // sends a 403 status code if the user doesn't own the course
         return res.status(403).end();
       } else {

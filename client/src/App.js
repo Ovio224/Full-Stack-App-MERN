@@ -31,17 +31,17 @@ class App extends Component {
   }
 
   render() {
-
+  
     return (
       <BrowserRouter>
         <div className="App">
-          <Header/>
+          <Header />
           <Switch>
             <Route
               exact
               path="/"
               render={({location}) => <Courses getData={this.getData} data={this.state.data} key={location.key}/>}/>
-            <Route path="/courses/create" component={CreateCourse}/>
+            <Route path="/courses/create" render={() => <CreateCourse getData={this.getData}/>}/>
             <Route
               exact
               path="/courses/:id/update"

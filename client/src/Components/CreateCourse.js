@@ -1,6 +1,12 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 
 export default class CreateCourse extends Component {
+
+  handleClick = () => {
+    this.props.getData('courses', 'post');
+  }
+
   render() {
     return (
 
@@ -16,7 +22,7 @@ export default class CreateCourse extends Component {
               </ul>
             </div>
           </div> */}
-          <form>
+          <form onSubmit={this.handleClick}>
             <div className="grid-66">
               <div className="course--header">
                 <h4 className="course--label">Course</h4>
@@ -63,7 +69,7 @@ export default class CreateCourse extends Component {
             <div className="grid-100 pad-bottom">
               <button className="button" type="submit">Create Course</button>
               {/* , location.href='/' */}
-              <a className="button button-secondary" href="/">Cancel</a>
+              <Link className="button button-secondary" to="/">Cancel</Link>
             </div>
           </form>
         </div>
