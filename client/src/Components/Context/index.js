@@ -17,7 +17,8 @@ export class Provider extends Component {
     emailAddress: '',
     password: '',
     confirmPassword: '',
-    signedIn: false
+    signedIn: false,
+    isLoading: false
   }
 
   changeFirstName = (e) => {
@@ -114,8 +115,8 @@ export class Provider extends Component {
             firstName: fname,
             lastName: lname,
             isLoading: false,
-            password: '',
-            emailAddress: '',
+            password,
+            emailAddress,
             signedIn: true
           });
         } else {
@@ -129,8 +130,8 @@ export class Provider extends Component {
 
     setTimeout(function () {
       if (this.state.signedIn) {
-        // history.goBack();
-        history.push('/');
+        history.goBack();
+        // history.push('/');
       }
     }.bind(this), 100);
   }
@@ -149,6 +150,7 @@ export class Provider extends Component {
   render() {
     return (
       <Context.Provider value={{
+        state: this.state,
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         emailAddress: this.state.emailAddress,

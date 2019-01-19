@@ -23,7 +23,6 @@ class CourseDetail extends Component {
       ));
     }
     
-
     return (
       <div>
         <div className="actions--bar">

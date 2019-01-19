@@ -7,7 +7,6 @@ const Course = require('../models').Course;
 const auth = require('basic-auth');
 const bcrypt = require('bcrypt');
 
-
 // auth function
 function getAuth(req, res, next) {
   User.find({
@@ -21,11 +20,12 @@ function getAuth(req, res, next) {
         }).then((response) => {
           if (isAuth) {
             req.user = users[0];
+            res.locals.user = users[0];
             next();
           } else {
             res.status(401).end();
           }
-        }).catch(err => res.send(err));
+        }).catch(err => console.log(err));
     } else {
       res.status(401).end();
     }
@@ -123,12 +123,13 @@ router.put('/courses/:id', getAuth, (req, res) => {
 });
 
 // deletes a course
-router.delete('/courses/:id', getAuth, (req, res) => {
+router.delete('/courses/:id', (req, res) => {
+  console.log(res.locals.user, req.body);
   const query = {
     _id: req.params.id
   };
   Course.findOne(query, (err, course) => {
-    console.log("req:", req.user)
+    console.log("req:", res.locals)
       if (course.user.toString() !== req.user._id.toString()) { // sends a 403 status code if the user doesn't own the course
         return res.status(403).end();
       } else {

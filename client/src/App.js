@@ -9,6 +9,8 @@ import CourseDetail from './Components/CourseDetail';
 import UpdateCourse from './Components/UpdateCourse';
 import UserSignIn from './Components/UserSignIn';
 import UserSignUp from './Components/UserSignUp';
+import UserSignOut from './Components/Stateless/UserSignOut';
+import {Consumer} from './Components/Context/';
 
 class App extends Component {
   state = {
@@ -17,48 +19,56 @@ class App extends Component {
   }
 
   getData = (route, method) => {
-    axios({
-        method,
-        url: `http://localhost:5000/api/${route}`
-      })
-      .then(res => {
-        this.setState({
-          data: res.data,
-          loading: false
-        });
-      })
-      .catch(err => console.error(err));
+    axios({method, url: `http://localhost:5000/api/${route}`}).then(res => {
+      this.setState({data: res.data, loading: false});
+    }).catch(err => console.error(err));
   }
 
   render() {
-  
+
     return (
-      <BrowserRouter>
-        <div className="App">
-          <Header />
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={({location}) => <Courses getData={this.getData} data={this.state.data} key={location.key}/>}/>
-            <Route path="/courses/create" render={() => <CreateCourse getData={this.getData}/>}/>
-            <Route
-              exact
-              path="/courses/:id/update"
-              render={({match}) => <UpdateCourse getData={this.getData} data={this.state.data} match={match}/>}/>
-            <Route
-              exact
-              path="/courses/:id"
-              render={({match, location}) => <CourseDetail
-              getData={this.getData}
-              data={this.state.data}
-              match={match}
-              key={location.key}/>}/>
-              <Route exact path="/signin" render={({history}) => <UserSignIn history={history}/>}/>
-              <Route exact path="/signup" render={() =><UserSignUp getData={this.getData}/>}/>
-          </Switch>
-        </div>
-      </BrowserRouter>
+      <Consumer>
+        {({actions, state}) => (
+          <BrowserRouter>
+            <div className="App">
+              <Route path="/" component={Header}/>
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={({location}) => <Courses getData={this.getData} data={this.state.data} key={location.key}/>}/>
+                <Route
+                  path="/courses/create"
+                  render={() => <CreateCourse state={state}/>}/>
+                <Route
+                  exact
+                  path="/courses/:id/update"
+                  render={({match}) => <UpdateCourse getData={this.getData} data={this.state.data} match={match}/>}/>
+                <Route
+                  exact
+                  path="/courses/:id"
+                  render={({match, location}) => <CourseDetail
+                  getData={this.getData}
+                  data={this.state.data}
+                  match={match}
+                  key={location.key}/>}/>
+                <Route
+                  exact
+                  path="/signin"
+                  render={({history}) => <UserSignIn history={history}/>}/>
+                <Route
+                  exact
+                  path="/signup"
+                  render={() =>< UserSignUp getData = {
+                  this.getData
+                } />}/>
+                <Route exact path="/signout"
+                render={({history}) => <UserSignOut history={history} signOut={actions.handleSignOut}/>}/>
+              </Switch>
+            </div>
+          </BrowserRouter>
+        )}
+      </Consumer>
     );
   }
 }

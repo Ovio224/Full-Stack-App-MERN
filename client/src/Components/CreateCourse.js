@@ -1,10 +1,61 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 import {Link} from 'react-router-dom';
 
 export default class CreateCourse extends Component {
 
-  handleClick = () => {
-    this.props.getData('courses', 'post');
+  state = {
+    title: "",
+    materialsNeeded: "",
+    estimatedTime: "",
+    description: ""
+  }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    let {
+      title,
+      materialsNeeded,
+      estimatedTime,
+      description
+    } = this.state;
+
+    // this.props.getData('courses', 'post');
+    axios.post('http://localhost:5000/api/courses', {
+      auth: {
+        username: this.props.state.emailAddress,
+        password: this.props.state.password
+      },
+      title,
+      materialsNeeded,
+      estimatedTime,
+      description
+    }).then(res => console.log(res.json()))
+      .catch(err => console.error(err));
+  }
+
+  handleChangeMaterialsNeeded = e => {
+    this.setState({
+      materialsNeeded: e.target.value
+    })
+  }
+
+  handleChangeTitle = e => {
+    this.setState({
+      title: e.target.value
+    })
+  }
+
+  handleChangeEstimatedTime = e => {
+    this.setState({
+      estimatedTime: e.target.value
+    })
+  }
+
+  handleChangeDescription = e => {
+    this.setState({
+      description: e.target.value
+    })
   }
 
   render() {
@@ -22,7 +73,7 @@ export default class CreateCourse extends Component {
               </ul>
             </div>
           </div> */}
-          <form onSubmit={this.handleClick}>
+          <form onSubmit={this.handleSubmit}>
             <div className="grid-66">
               <div className="course--header">
                 <h4 className="course--label">Course</h4>
@@ -30,6 +81,7 @@ export default class CreateCourse extends Component {
                   id="title"
                   name="title"
                   type="text"
+                  onChange={this.handleChangeTitle}
                   className="input-title course--title--input"
                   placeholder="Course title..."/>
                 </div>
@@ -40,6 +92,7 @@ export default class CreateCourse extends Component {
                   id="description"
                   name="description"
                   placeholder="Course description..."
+                  onChange={this.handleChangeDescription}
                   defaultValue={""}/></div>
               </div>
             </div>
@@ -52,6 +105,7 @@ export default class CreateCourse extends Component {
                       id="estimatedTime"
                       name="estimatedTime"
                       type="text"
+                      onChange={this.handleChangeEstimatedTime}
                       className="course--time--input"
                       placeholder="Hours"/></div>
                   </li>
@@ -61,6 +115,7 @@ export default class CreateCourse extends Component {
                       id="materialsNeeded"
                       name="materialsNeeded"
                       placeholder="List materials..."
+                      onChange={this.handleChangeMaterialsNeeded}
                       defaultValue={""}/></div>
                   </li>
                 </ul>
