@@ -13,25 +13,36 @@ export default class CreateCourse extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    let {
+    const {
       title,
       materialsNeeded,
       estimatedTime,
       description
     } = this.state;
 
-    // this.props.getData('courses', 'post');
-    axios.post('http://localhost:5000/api/courses', {
-      auth: {
-        username: this.props.state.emailAddress,
-        password: this.props.state.password
-      },
-      title,
-      materialsNeeded,
-      estimatedTime,
-      description
-    }).then(res => console.log(res.json()))
-      .catch(err => console.error(err));
+    const password = this.props.state.password;
+    const username = this.props.state.emailAddress;
+
+    axios({
+        headers: {
+          'content-type': 'application/json'
+        },
+        method: 'post',
+        url: `http://localhost:5000/api/courses`,
+        auth: {
+          username,
+          password
+        },
+        data: {
+          title,
+          materialsNeeded,
+          estimatedTime,
+          description
+        }
+      })
+      .then((response) => console.log(response.status))
+      .catch((error) => console.error(error));
+
   }
 
   handleChangeMaterialsNeeded = e => {
@@ -85,7 +96,7 @@ export default class CreateCourse extends Component {
                   className="input-title course--title--input"
                   placeholder="Course title..."/>
                 </div>
-                {/* <p>By Joe Smith</p> */}
+                <p>By {this.props.state.firstName + " " + this.props.state.lastName}</p>
               </div>
               <div className="course--description">
                 <div><textarea
@@ -122,7 +133,7 @@ export default class CreateCourse extends Component {
               </div>
             </div>
             <div className="grid-100 pad-bottom">
-              <button className="button" type="submit">Create Course</button>
+              <button className="button" type="submit" name="createCourse">Create Course</button>
               {/* , location.href='/' */}
               <Link className="button button-secondary" to="/">Cancel</Link>
             </div>

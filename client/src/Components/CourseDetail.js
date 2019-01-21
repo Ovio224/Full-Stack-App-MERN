@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 class CourseDetail extends Component {
 
@@ -9,7 +10,23 @@ class CourseDetail extends Component {
   }
 
   handleClick = () => {
-    this.props.getData(`courses/${this.props.match.params.id}`, 'delete');
+
+    const password = this.props.state.password;
+    const username = this.props.state.emailAddress;
+
+    axios({
+      headers: {
+        'content-type': 'application/json'
+      },
+      method: 'delete',
+      url: `http://localhost:5000/api/courses/${this.props.match.params.id}`,
+      auth: {
+        username,
+        password
+      }
+    })
+    .then((response) => console.log(response.status))
+    .catch((error) => console.error(error));
   }
 
   render() {

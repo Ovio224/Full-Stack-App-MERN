@@ -48,6 +48,7 @@ class App extends Component {
                   exact
                   path="/courses/:id"
                   render={({match, location}) => <CourseDetail
+                  state={state}
                   getData={this.getData}
                   data={this.state.data}
                   match={match}

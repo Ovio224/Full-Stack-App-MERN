@@ -104,11 +104,12 @@ export class Provider extends Component {
       .then(res => {
         let fname;
         let lname;
-        res.data.filter((data) => {
+        res.data.filter(function(data) {
           if (data.emailAddress === emailAddress) {
             fname = data.firstName;
             lname = data.lastName;
           }
+          return null;
         });
         if (res.status === 200) {
           this.setState({

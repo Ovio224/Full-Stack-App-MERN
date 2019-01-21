@@ -8,7 +8,7 @@ const auth = require('basic-auth');
 const bcrypt = require('bcrypt');
 
 // auth function
-function getAuth(req, res, next) {
+const getAuth = (req, res, next) => {
   User.find({
     emailAddress: auth(req).name
   }).then((users) => {
@@ -30,9 +30,10 @@ function getAuth(req, res, next) {
       res.status(401).end();
     }
   }).catch((err) => {
-    next(err);
+    res.send(err);
   });
-};
+}
+
 
 
 // gets the course id -- one different way to approach this
@@ -88,13 +89,13 @@ router.get('/courses/:cID', (req, res) => {
 });
 
 // post a new course
-router.post('/courses', getAuth, (req, res) => {
+router.post('/courses', getAuth, (req, res, next) => {
   Course.create(req.body, (err, course) => {
 
     if (err && err.name === "ValidationError") {
       res.status(400).send(err.errors)
     } else if (err) {
-      return res.status(500).send(err);
+      res.status(500).send(err);
     } else if (!err) {
       res.status(201).location(`/courses/${course._id}`).end();
     }
@@ -123,13 +124,12 @@ router.put('/courses/:id', getAuth, (req, res) => {
 });
 
 // deletes a course
-router.delete('/courses/:id', (req, res) => {
-  console.log(res.locals.user, req.body);
+router.delete('/courses/:id', getAuth, (req, res) => {
   const query = {
     _id: req.params.id
   };
   Course.findOne(query, (err, course) => {
-    console.log("req:", res.locals)
+    // console.log(course.user, req.user._id)
       if (course.user.toString() !== req.user._id.toString()) { // sends a 403 status code if the user doesn't own the course
         return res.status(403).end();
       } else {
