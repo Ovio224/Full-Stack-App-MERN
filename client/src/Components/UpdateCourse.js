@@ -5,7 +5,6 @@ export default class UpdateCourse extends Component{
 
   componentDidMount() {
     this.props.getData(`courses/${this.props.match.params.id}`);
-    console.log('mounting coursedetail')
   }
 
   render() {

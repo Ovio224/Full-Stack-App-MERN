@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-// import CourseDetail from './CourseDetail'; import CreateCourse from
-// './CreateCourse';
+
 
 class Courses extends Component {
+  
   componentDidMount() {
     this.props.getData('courses', 'get');
-    console.log('mounting');
   }
+
 
   render() {
     let data = [];

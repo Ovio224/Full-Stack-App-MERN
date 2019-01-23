@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 
+
 export default class CreateCourse extends Component {
 
   state = {
@@ -22,6 +23,7 @@ export default class CreateCourse extends Component {
 
     const password = this.props.state.password;
     const username = this.props.state.emailAddress;
+    const id = this.props.state.userId;
 
     axios({
         headers: {
@@ -35,6 +37,9 @@ export default class CreateCourse extends Component {
         },
         data: {
           title,
+          user: {
+            _id: id
+          },
           materialsNeeded,
           estimatedTime,
           description
@@ -42,6 +47,9 @@ export default class CreateCourse extends Component {
       })
       .then((response) => console.log(response.status))
       .catch((error) => console.error(error));
+    
+    console.log(this.props.data);
+    this.props.history.goBack();
 
   }
 
@@ -70,6 +78,7 @@ export default class CreateCourse extends Component {
   }
 
   render() {
+
     return (
 
       <div className="bounds course--detail">

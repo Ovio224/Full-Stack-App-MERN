@@ -39,7 +39,7 @@ class App extends Component {
                   render={({location}) => <Courses getData={this.getData} data={this.state.data} key={location.key}/>}/>
                 <Route
                   path="/courses/create"
-                  render={() => <CreateCourse state={state}/>}/>
+                  render={({history}) => <CreateCourse state={state} history={history} data={this.state.data}/>}/>
                 <Route
                   exact
                   path="/courses/:id/update"
@@ -47,7 +47,8 @@ class App extends Component {
                 <Route
                   exact
                   path="/courses/:id"
-                  render={({match, location}) => <CourseDetail
+                  render={({match, location, history}) => <CourseDetail
+                  history={history}
                   state={state}
                   getData={this.getData}
                   data={this.state.data}

@@ -6,7 +6,6 @@ class CourseDetail extends Component {
 
   componentDidMount() {
     this.props.getData(`courses/${this.props.match.params.id}`, 'get');
-    console.log('mounting coursedetail')
   }
 
   handleClick = () => {
@@ -27,6 +26,7 @@ class CourseDetail extends Component {
     })
     .then((response) => console.log(response.status))
     .catch((error) => console.error(error));
+    this.props.history.push('/');
   }
 
   render() {

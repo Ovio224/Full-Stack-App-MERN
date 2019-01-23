@@ -12,6 +12,7 @@ const Context = React.createContext();
 export class Provider extends Component {
 
   state = {
+    userId: '',
     firstName: '',
     lastName: '',
     emailAddress: '',
@@ -104,10 +105,12 @@ export class Provider extends Component {
       .then(res => {
         let fname;
         let lname;
+        let userId;
         res.data.filter(function(data) {
           if (data.emailAddress === emailAddress) {
             fname = data.firstName;
             lname = data.lastName;
+            userId = data._id;
           }
           return null;
         });
@@ -115,6 +118,7 @@ export class Provider extends Component {
           this.setState({
             firstName: fname,
             lastName: lname,
+            userId,
             isLoading: false,
             password,
             emailAddress,
