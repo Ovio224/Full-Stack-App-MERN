@@ -18,6 +18,7 @@ class App extends Component {
     loading: true
   }
 
+  // calls the restapi - custom function for reusability
   getData = (route, method) => {
     axios({method, url: `http://localhost:5000/api/${route}`}).then(res => {
       this.setState({data: res.data, loading: false});
@@ -43,7 +44,7 @@ class App extends Component {
                 <Route
                   exact
                   path="/courses/:id/update"
-                  render={({match}) => <UpdateCourse getData={this.getData} data={this.state.data} match={match}/>}/>
+                  render={({match, history}) => <UpdateCourse state={state} history={history} getData={this.getData} data={this.state.data} match={match}/>}/>
                 <Route
                   exact
                   path="/courses/:id"

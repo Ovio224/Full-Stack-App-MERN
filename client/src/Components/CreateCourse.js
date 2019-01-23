@@ -12,6 +12,7 @@ export default class CreateCourse extends Component {
     description: ""
   }
 
+  // creates a course
   handleSubmit = e => {
     e.preventDefault();
     const {

@@ -52,6 +52,7 @@ export class Provider extends Component {
     })
   }
 
+  // creates a new user
   handleSignUp = (e) => {
     const {
       firstName,
@@ -89,6 +90,7 @@ export class Provider extends Component {
 
   }
 
+  // signs the user in
   handleSignIn = (e, history) => {
     e.preventDefault();
     const {
@@ -141,6 +143,7 @@ export class Provider extends Component {
     }.bind(this), 100);
   }
 
+  // signs out the user
   handleSignOut = () => {
     this.setState({
       firstName: '',
